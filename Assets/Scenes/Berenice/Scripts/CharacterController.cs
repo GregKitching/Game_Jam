@@ -3,20 +3,21 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
 
-    [SerializeField] private float moveSpeed, playerHeight = 2;
+    [SerializeField] private float moveSpeed, playerHeight = 2, moveMultiplier;
     private float horizontalInput, verticalInput;
     public float gravityMultiplier;
 
     [SerializeField] private bool isGrounded;
     public bool canMove = true;
 
-    [SerializeField] private LayerMask _whatIsGround;
+    [SerializeField] private LayerMask whatIsGround;
 
     private Vector3 moveDirection, velocity = Vector3.zero;
 
     [SerializeField] private Rigidbody player;
 
     [SerializeField] private Transform orientation;
+
 
     private void Start()
     {
@@ -58,11 +59,11 @@ public class CharacterController : MonoBehaviour
     }
     void LimitVelocity()
     {
-        Vector3 _vel = new Vector3(player.linearVelocity.x, 0f, rb.velocity.z);
+        Vector3 vel = new Vector3(player.linearVelocity.x, 0f, player.linearVelocity.z);
         if (vel.magnitude > moveSpeed)
         {
             Vector3 limitVel = vel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
+            player.linearVelocity = new Vector3(limitVel.x, player.linearVelocity.y, limitVel.z);
         }
     }
 
